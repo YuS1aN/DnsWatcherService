@@ -1,6 +1,6 @@
 # DnsWatcherService
 
-通过适配<a href="https://github.com/jeessy2/ddns-go">DDNS-GO</a>的Webhook，实现内网搭建的DNS服务器ip更改后同步更新Windows的ipv6 DNS。
+配合<a href="https://github.com/jeessy2/ddns-go">DDNS-GO</a>的Webhook使用，实现内网搭建的DNS服务器ip更改后同步更新Windows的ipv6 DNS。
 <br/><br/>
 `.\DnsWatcherService.exe --run`开启服务端，默认地址为 `http://0.0.0.0:11451/webhook`，目标网卡为`以太网`
 <br/><br/>
