@@ -5,6 +5,9 @@
 #include "mongoose.h"
 #include <string>
 
+static const char* s_listening_address = "http://0.0.0.0:11451";
+static const char* s_interface_name = "以太网";
+
 class WebhookHttpService
 {
 public:

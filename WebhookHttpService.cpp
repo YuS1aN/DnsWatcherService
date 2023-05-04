@@ -1,7 +1,5 @@
 ﻿#include "WebhookHttpService.h"
 
-static const char* s_listening_address = "http://0.0.0.0:11451";
-
 bool WebhookHttpService::start_service()
 {
 	struct mg_mgr mgr;
@@ -38,7 +36,7 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 				return;
 			}
 			char* ipv6_address = mg_json_get_str(hm->body, "$.ipv6Address");
-			modify_ipv6_dns("以太网", ipv6_address);
+			modify_ipv6_dns(s_interface_name, ipv6_address);
 			mg_http_reply(c, 200, NULL, "Success.\n");
 			return;
 		}
