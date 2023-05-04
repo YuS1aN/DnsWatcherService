@@ -1,4 +1,4 @@
-#include "WinServiceControl.h"
+﻿#include "WinServiceControl.h"
 #include "WebhookHttpService.h"
 #include <thread>
 

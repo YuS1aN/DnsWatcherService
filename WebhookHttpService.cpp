@@ -1,4 +1,4 @@
-#include "WebhookHttpService.h"
+ï»¿#include "WebhookHttpService.h"
 
 static const char* s_listening_address = "http://0.0.0.0:11451";
 
@@ -32,13 +32,13 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 		if (mg_http_match_uri(hm, "/webhook")) {
 			char* ipv6_result = mg_json_get_str(hm->body, "$.ipv6Result");
 			MG_INFO(("ipv6_result:%s", ipv6_result));
-			if (ipv6_result != nullptr && !strcmp(ipv6_result, "³É¹¦"))
+			if (ipv6_result != nullptr && !strcmp(ipv6_result, "æˆåŠŸ"))
 			{
 				mg_http_reply(c, 200, NULL, "Fail.\n");
 				return;
 			}
 			char* ipv6_address = mg_json_get_str(hm->body, "$.ipv6Address");
-			modify_ipv6_dns("ÒÔÌ«Íø", ipv6_address);
+			modify_ipv6_dns("ä»¥å¤ªç½‘", ipv6_address);
 			mg_http_reply(c, 200, NULL, "Success.\n");
 			return;
 		}
@@ -51,7 +51,7 @@ void WebhookHttpService::modify_ipv6_dns(const std::string interface_name, const
 {
 	std::string cmd = "netsh interface ipv6 set dnsservers \"" + interface_name + "\" static " + addr + " >> log.txt";
 	std::system(cmd.c_str());
-	//±¸ÓÃDNSÅäÖÃ
+	//å¤‡ç”¨DNSé…ç½®
 	//cmd = "netsh interface ipv6 add dnsservers \"" + interface_name + "\" 240e:1c:200::1 >> log.txt";
 	//std::system(cmd.c_str());
 }

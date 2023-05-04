@@ -1,4 +1,4 @@
-#ifndef WIN_SERVICE_CONTROL_H
+﻿#ifndef WIN_SERVICE_CONTROL_H
 #define WIN_SERVICE_CONTROL_H
 
 #pragma once
