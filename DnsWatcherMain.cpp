@@ -16,8 +16,25 @@ int main(int argc, char* argv[])
 		WinServiceControl::deleteService();
 		return 0;
 	}
+	if (argc > 1 && strcmp(argv[1], "--run") == 0)
+	{
+		WebhookHttpService service;
+		service.start_service();
+		return 0;
+	}
 
-	WebhookHttpService service;
-	service.start_service();
+	SERVICE_TABLE_ENTRY DispatchTable[] =
+	{
+		{ LPWSTR(SERVICE_NAME), (LPSERVICE_MAIN_FUNCTION)WinServiceControl::svcMain},
+		{ NULL, NULL }
+	};
+
+	// This call returns when the service has stopped. 
+	// The process should simply terminate when the call returns.
+
+	if (!StartServiceCtrlDispatcher(DispatchTable))
+	{
+		WinServiceControl::svcReportEvent(TEXT("StartServiceCtrlDispatcher"));
+	}
 	return 0;
 }

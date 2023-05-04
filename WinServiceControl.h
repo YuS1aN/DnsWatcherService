@@ -24,6 +24,10 @@ public:
 
 	static void deleteService();
 
+	static void WINAPI svcMain(DWORD dwArgc, LPTSTR* lpszArgv);
+
+	static void svcReportEvent(LPCTSTR szFunction);
+
 private:
 
 	static void initService(DWORD dwArgc, LPTSTR* lpszArgv);
@@ -31,10 +35,6 @@ private:
 	static void reportSvcStatus(DWORD dwCurrentState, DWORD dwWin32ExitCode, DWORD dwWaitHint);
 
 	static void svcCtrlHandler(DWORD dwCtrl);
-
-	static void WINAPI svcMain(DWORD dwArgc, LPTSTR* lpszArgv);
-
-	static void svcReportEvent(LPCTSTR szFunction);
 };
 
 #endif //WIN_SERVICE_CONTROL_H
