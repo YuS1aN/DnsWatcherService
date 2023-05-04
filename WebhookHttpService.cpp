@@ -51,6 +51,7 @@ void WebhookHttpService::modify_ipv6_dns(const std::string interface_name, const
 {
 	std::string cmd = "netsh interface ipv6 set dnsservers \"" + interface_name + "\" static " + addr + " >> log.txt";
 	std::system(cmd.c_str());
-	cmd = "netsh interface ipv6 add dnsservers \"" + interface_name + "\" 240e:1c:200::1 >> log.txt";
-	std::system(cmd.c_str());
+	//±¸ÓÃDNSÅäÖÃ
+	//cmd = "netsh interface ipv6 add dnsservers \"" + interface_name + "\" 240e:1c:200::1 >> log.txt";
+	//std::system(cmd.c_str());
 }
