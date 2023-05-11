@@ -1,10 +1,6 @@
 ﻿#pragma once
 #include <string>
-#include <processthreadsapi.h>
-#include <fileapi.h>
-#include <WinBase.h>
-#include <WinUser.h>
-#include <stringapiset.h>
+#include <windows.h>
 
 class WCommend
 {

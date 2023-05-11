@@ -1,6 +1,5 @@
 ﻿#include "WCommend.h"
 
-
 wchar_t* WCommend::char2wchar(const char* cchar)
 {
 	wchar_t* m_wchar;
