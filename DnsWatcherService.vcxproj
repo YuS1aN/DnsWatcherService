@@ -134,11 +134,13 @@
   <ItemGroup>
     <ClCompile Include="DnsWatcherMain.cpp" />
     <ClCompile Include="mongoose.c" />
+    <ClCompile Include="WCommend.cpp" />
     <ClCompile Include="WinServiceControl.cpp" />
     <ClCompile Include="WebhookHttpService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mongoose.h" />
+    <ClInclude Include="WCommend.h" />
     <ClInclude Include="WinServiceControl.h" />
     <ClInclude Include="WebhookHttpService.h" />
   </ItemGroup>

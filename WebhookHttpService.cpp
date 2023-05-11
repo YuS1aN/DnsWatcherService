@@ -1,4 +1,5 @@
 ﻿#include "WebhookHttpService.h"
+#include "WCommend.h"
 
 bool WebhookHttpService::start_service()
 {
@@ -36,7 +37,9 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 				return;
 			}
 			char* ipv6_address = mg_json_get_str(hm->body, "$.ipv6Address");
-			modify_ipv6_dns(s_interface_name, ipv6_address);
+			wchar_t* w_ipv6_address = WCommend::char2wchar(ipv6_address);
+			modify_ipv6_dns(s_interface_name, w_ipv6_address);
+			delete[] w_ipv6_address;
 			mg_http_reply(c, 200, NULL, "Success.\n");
 			return;
 		}
@@ -45,11 +48,22 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 	}
 }
 
-void WebhookHttpService::modify_ipv6_dns(const std::string interface_name, const std::string addr)
+void WebhookHttpService::modify_ipv6_dns(const std::wstring interface_name, const std::wstring addr)
 {
-	std::string cmd = "netsh interface ipv6 set dnsservers \"" + interface_name + "\" static " + addr + " >> log.txt";
-	std::system(cmd.c_str());
+	std::FILE* fp = fopen(s_log_path, "a");
+
+	std::wstring cmd = L"netsh interface ipv6 set dnsservers \"" + interface_name + L"\" static " + addr;
+	const wchar_t* cs = cmd.c_str();
+
+	fwprintf(fp, L"cmd: %s\r\n", cs);
+	fwprintf(fp, L"ret: %d\r\n", WCommend::runCmdAndOutPutRedirect(s_w_log_path, cs, true));
+
 	//备用DNS配置
-	//cmd = "netsh interface ipv6 add dnsservers \"" + interface_name + "\" 240e:1c:200::1 >> log.txt";
-	//std::system(cmd.c_str());
+	//cmd = L"netsh interface ipv6 add dnsservers \"" + interface_name + L"\" 240e:1c:200::1";
+
+	//cs = cmd.c_str();
+	//fwprintf(fp, L"cmd: %s\r\n", cs);
+	//fwprintf(fp, L"ret: %d\r\n", WCommend::runCmdAndOutPutRedirect(s_w_log_path, cs, true));
+
+	fclose(fp);
 }
