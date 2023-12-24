@@ -9,8 +9,8 @@ static const char* s_listening_address = "http://0.0.0.0:11451";
 static const wchar_t* s_interface_name = L"以太网";
 static const char* s_log_path = "DnsLog.txt";
 static const wchar_t* s_w_log_path = L"DnsLog.txt";
-static std::string s_dns2 = "::1";
-static std::wstring s_w_dns2 = L"::1";
+static std::string s_dns2 = "2001:4860:4860::8888";
+static std::wstring s_w_dns2 = L"2001:4860:4860::8888";
 
 class WebhookHttpService
 {
