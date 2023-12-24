@@ -1,0 +1,82 @@
+Listening on     : http://0.0.0.0:11451.
+Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+Listening on     : http://0.0.0.0:11451.
+Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+Listening on     : http://0.0.0.0:11451.
+Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+Listening on     : http://0.0.0.0:11451.
+Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+DNS not changed.
+2023-12-25 04:55:02 Listening on     : http://0.0.0.0:11451.
+2023-12-25 04:55:09 Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+2023-12-25 04:55:09 DNS not changed.
+2023-12-25 05:02:52 Listening on     : http://0.0.0.0:11451.
+2023-12-25 05:02:59 Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}
+2023-12-25 05:02:59 DNS not changed.
+2023-12-25 05:03:23 Listening on     : http://0.0.0.0:11451.
+2023-12-25 05:03:25 Receive request:
+{
+    "ipv4Address":"127.0.0.1",
+    "ipv4Result":"成功",
+    "ipv4Domains":"test.example.com",
+    "ipv6Address":"::1",
+    "ipv6Result":"成功",
+    "ipv6Domains":"test.example.com"
+}

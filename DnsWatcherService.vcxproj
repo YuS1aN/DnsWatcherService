@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mongoose.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="WCommand.h" />
     <ClInclude Include="WinServiceControl.h" />
     <ClInclude Include="WebhookHttpService.h" />
