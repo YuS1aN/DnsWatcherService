@@ -101,7 +101,7 @@ void WinServiceControl::deleteService()
 	}
 
 	// Delete the service.
-
+	
 	if (!DeleteService(schService))
 	{
 		printf("DeleteService failed (%d)\n", GetLastError());

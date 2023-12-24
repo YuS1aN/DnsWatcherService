@@ -1,11 +1,14 @@
 ﻿// DnsWatcherService.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 #include <iostream>
+#include <locale.h> 
 #include "WinServiceControl.h"
 #include "WebhookHttpService.h"
 
 int main(int argc, char* argv[])
 {
+	_wsetlocale(LC_ALL, L"chs");
+
 	if (argc > 1 && strcmp(argv[1], "--install") == 0)
 	{
 		WinServiceControl::installService();

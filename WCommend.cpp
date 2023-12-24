@@ -1,36 +1,30 @@
 ﻿#include "WCommend.h"
 
+
 wchar_t* WCommend::char2wchar(const char* cchar)
 {
+	return char2wchar(cchar, CP_ACP);
+}
+
+wchar_t* WCommend::char2wchar(const char* cchar, UINT CodePage)
+{
 	wchar_t* m_wchar;
-	int len = MultiByteToWideChar(CP_ACP, 0, cchar, strlen(cchar), NULL, 0);
+	int len = MultiByteToWideChar(CodePage, 0, cchar, strlen(cchar), NULL, 0);
 	m_wchar = new wchar_t[len + 1];
-	MultiByteToWideChar(CP_ACP, 0, cchar, strlen(cchar), m_wchar, len);
+	MultiByteToWideChar(CodePage, 0, cchar, strlen(cchar), m_wchar, len);
 	m_wchar[len] = '\0';
 	return m_wchar;
 }
 
-int WCommend::runCmdAndOutPutRedirect(const std::wstring& outPutFile, const std::wstring& cmd, bool wait)
+int WCommend::runCmdAndOutPutRedirect(HANDLE& handle, const std::wstring& cmd, bool wait)
 {
-	STARTUPINFOW si;
-	PROCESS_INFORMATION pi;
-
-	SECURITY_ATTRIBUTES sa;
-	sa.nLength = sizeof(sa);
-	sa.lpSecurityDescriptor = NULL;
-	sa.bInheritHandle = TRUE;
-
-	HANDLE handle = CreateFileW(outPutFile.c_str(),
-		FILE_APPEND_DATA,
-		FILE_SHARE_WRITE | FILE_SHARE_READ,
-		&sa,
-		CREATE_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL,
-		NULL);
 	if (!handle)
 	{
 		return -1;
 	}
+
+	STARTUPINFOW si;
+	PROCESS_INFORMATION pi;
 
 	memset(&si, 0, sizeof(STARTUPINFOW));
 	memset(&pi, 0, sizeof(PROCESS_INFORMATION));
@@ -61,8 +55,20 @@ int WCommend::runCmdAndOutPutRedirect(const std::wstring& outPutFile, const std:
 		WaitForSingleObject(pi.hProcess, INFINITE);
 	}
 
-	CloseHandle(handle);
 	CloseHandle(pi.hThread);
 	CloseHandle(pi.hProcess);
 	return 0;
+}
+
+
+void WCommend::createFileHandle(const std::wstring& outPutFile, HANDLE& handle)
+{
+	SECURITY_ATTRIBUTES sa{ sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
+	handle = CreateFileW(outPutFile.c_str(),
+		FILE_APPEND_DATA,
+		FILE_SHARE_WRITE | FILE_SHARE_READ,
+		&sa,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
 }

@@ -7,5 +7,9 @@ class WCommend
 public:
 	static wchar_t* char2wchar(const char* cchar);
 
-	static int runCmdAndOutPutRedirect(const std::wstring& outPutFile, const std::wstring& cmd, bool wait = false);
+	static wchar_t* char2wchar(const char* cchar, UINT CodePage);
+
+	static int runCmdAndOutPutRedirect(HANDLE& handle, const std::wstring& cmd, bool wait = false);
+
+	static void createFileHandle(const std::wstring& outPutFile, HANDLE& handle);
 };
