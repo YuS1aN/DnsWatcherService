@@ -3,23 +3,13 @@
 
 #include <vector>
 
-static void splitString(std::string str, char separator, std::vector<std::string>& output);
-
 static void log_wprintf(const wchar_t* _format, ...) {
-	wchar_t* format = new wchar_t[21 + wcslen(_format)];
-	SYSTEMTIME sys_time;
-	GetLocalTime(&sys_time);
-	wsprintf(format, L"%4d-%02d-%02d %02d:%02d:%02d ", sys_time.wYear, sys_time.wMonth, sys_time.wDay, sys_time.wHour, sys_time.wMinute, sys_time.wSecond);
-	wcscat(format, _format);
-
 	va_list va;
 	va_start(va, _format);
 	std::FILE* fp = fopen(s_log_path, "a");
-	vfwprintf(fp, format, va);
+	vfwprintf(fp, _format, va);
 	fclose(fp);
 	va_end(va);
-
-	delete[] format;
 }
 
 bool WebhookHttpService::start_service()
@@ -81,17 +71,7 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 				ip_arr[i] = ip & 0xFF;
 				ip >>= 8;
 			}
-
-			bool ip_check = true;
-			for (int i = 0; i < 4; i++)
-			{
-				if (s_request_ip[i] != 0 && ip_arr[i] != s_request_ip[i])
-				{
-					ip_check = false;
-					break;
-				}
-			}
-			if (!ip_check)
+			if (ip_arr[0] != 192 || ip_arr[1] != 168 || ip_arr[2] != 33)
 			{
 				mg_http_reply(c, 404, NULL, "\n");
 				return;
@@ -101,9 +81,10 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 			free(ipv6_address);
 			std::wstring local_dns;
 			get_ipv6_dns(s_interface_name, local_dns);
-			if (local_dns == w_ipv6_address) log_wprintf(L"DNS not changed.\r\n");
-			else modify_ipv6_dns(s_interface_name, w_ipv6_address);
-
+			if (local_dns != w_ipv6_address)
+			{
+				modify_ipv6_dns(s_interface_name, w_ipv6_address);
+			}
 			delete[] w_ipv6_address;
 			mg_http_reply(c, 200, NULL, "Success.\n");
 			return;
@@ -118,17 +99,17 @@ void WebhookHttpService::modify_ipv6_dns(const std::wstring interface_name, cons
 	std::wstring cmd = L"netsh interface ipv6 set dnsservers \"" + interface_name + L"\" static " + addr;
 	const wchar_t* cs = cmd.c_str();
 
-	log_wprintf(L"run cmd: %s\r\n", cs);
+	log_wprintf(L"cmd: %s\r\n", cs);
 	HANDLE handle;
 	WCommand::createFileHandle(s_w_log_path, handle);
-	log_wprintf(L"return: %d\r\n", WCommand::runCmdAndOutPutRedirect(handle, cs, true));
+	log_wprintf(L"ret: %d\r\n", WCommand::runCmdAndOutPutRedirect(handle, cs, true));
 
 	//备用DNS配置
 	cmd = L"netsh interface ipv6 add dnsservers \"" + interface_name + L"\" " + s_w_dns2;
 
 	cs = cmd.c_str();
-	log_wprintf(L"run cmd: %s\r\n", cs);
-	log_wprintf(L"return: %d\r\n", WCommand::runCmdAndOutPutRedirect(handle, cs, true));
+	log_wprintf(L"cmd: %s\r\n", cs);
+	log_wprintf(L"ret: %d\r\n", WCommand::runCmdAndOutPutRedirect(handle, cs, true));
 
 	CloseHandle(handle);
 }
