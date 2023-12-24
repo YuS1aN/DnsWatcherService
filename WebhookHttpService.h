@@ -11,6 +11,7 @@ static const char* s_log_path = "DnsLog.txt";
 static const wchar_t* s_w_log_path = L"DnsLog.txt";
 static std::string s_dns2 = "2001:4860:4860::8888";
 static std::wstring s_w_dns2 = L"2001:4860:4860::8888";
+static const int s_request_ip[4] = { 0,0,0,0 }; //TODO Only requests from this IP are allowed. eg. 192.168.1.XXX -> { 192,168,1,0 }
 
 class WebhookHttpService
 {
