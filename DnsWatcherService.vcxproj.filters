@@ -27,7 +27,7 @@
     <ClCompile Include="WebhookHttpService.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WCommend.cpp">
+    <ClCompile Include="WCommand.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,7 +41,7 @@
     <ClInclude Include="WebhookHttpService.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WCommend.h">
+    <ClInclude Include="WCommand.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

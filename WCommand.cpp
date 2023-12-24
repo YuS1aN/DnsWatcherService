@@ -1,12 +1,12 @@
-﻿#include "WCommend.h"
+﻿#include "WCommand.h"
 
 
-wchar_t* WCommend::char2wchar(const char* cchar)
+wchar_t* WCommand::char2wchar(const char* cchar)
 {
 	return char2wchar(cchar, CP_ACP);
 }
 
-wchar_t* WCommend::char2wchar(const char* cchar, UINT CodePage)
+wchar_t* WCommand::char2wchar(const char* cchar, UINT CodePage)
 {
 	wchar_t* m_wchar;
 	int len = MultiByteToWideChar(CodePage, 0, cchar, strlen(cchar), NULL, 0);
@@ -16,7 +16,7 @@ wchar_t* WCommend::char2wchar(const char* cchar, UINT CodePage)
 	return m_wchar;
 }
 
-int WCommend::runCmdAndOutPutRedirect(HANDLE& handle, const std::wstring& cmd, bool wait)
+int WCommand::runCmdAndOutPutRedirect(HANDLE& handle, const std::wstring& cmd, bool wait)
 {
 	if (!handle)
 	{
@@ -61,7 +61,7 @@ int WCommend::runCmdAndOutPutRedirect(HANDLE& handle, const std::wstring& cmd, b
 }
 
 
-void WCommend::createFileHandle(const std::wstring& outPutFile, HANDLE& handle)
+void WCommand::createFileHandle(const std::wstring& outPutFile, HANDLE& handle)
 {
 	SECURITY_ATTRIBUTES sa{ sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
 	handle = CreateFileW(outPutFile.c_str(),

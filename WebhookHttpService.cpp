@@ -1,5 +1,5 @@
 ﻿#include "WebhookHttpService.h"
-#include "WCommend.h"
+#include "WCommand.h"
 
 #include <vector>
 
@@ -27,7 +27,7 @@ bool WebhookHttpService::start_service()
 
 	MG_INFO(("Mongoose version : v%s", MG_VERSION));
 	MG_INFO(("Listening on     : %s", s_listening_address));
-	wchar_t* w_address = WCommend::char2wchar(s_listening_address);
+	wchar_t* w_address = WCommand::char2wchar(s_listening_address);
 	log_wprintf(L"Listening on     : %s.\r\n", w_address);
 	delete[] w_address;
 
@@ -45,7 +45,7 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 	if (ev == MG_EV_HTTP_MSG) {
 		struct mg_http_message* hm = (struct mg_http_message*)ev_data;
 		if (mg_http_match_uri(hm, "/webhook")) {
-			wchar_t* w_request = WCommend::char2wchar(hm->body.ptr);
+			wchar_t* w_request = WCommand::char2wchar(hm->body.ptr);
 			log_wprintf(L"Receive request:\r\n%s\r\n", w_request);
 			delete[] w_request;
 
@@ -55,7 +55,7 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 				mg_http_reply(c, 200, NULL, "Fail.\n");
 				return;
 			}
-			wchar_t* w_ipv6_result = WCommend::char2wchar(ipv6_result, CP_UTF8);
+			wchar_t* w_ipv6_result = WCommand::char2wchar(ipv6_result, CP_UTF8);
 			free(ipv6_result);
 			if (wcscmp(w_ipv6_result, L"成功") != 0 && wcscmp(w_ipv6_result, L"未改变") != 0)
 			{
@@ -77,7 +77,7 @@ void WebhookHttpService::event_handler(struct mg_connection* c, int ev, void* ev
 				return;
 			}
 			char* ipv6_address = mg_json_get_str(hm->body, "$.ipv6Address");
-			wchar_t* w_ipv6_address = WCommend::char2wchar(ipv6_address);
+			wchar_t* w_ipv6_address = WCommand::char2wchar(ipv6_address);
 			free(ipv6_address);
 			std::wstring local_dns;
 			get_ipv6_dns(s_interface_name, local_dns);
@@ -101,15 +101,15 @@ void WebhookHttpService::modify_ipv6_dns(const std::wstring interface_name, cons
 
 	log_wprintf(L"cmd: %s\r\n", cs);
 	HANDLE handle;
-	WCommend::createFileHandle(s_w_log_path, handle);
-	log_wprintf(L"ret: %d\r\n", WCommend::runCmdAndOutPutRedirect(handle, cs, true));
+	WCommand::createFileHandle(s_w_log_path, handle);
+	log_wprintf(L"ret: %d\r\n", WCommand::runCmdAndOutPutRedirect(handle, cs, true));
 
 	//备用DNS配置
 	cmd = L"netsh interface ipv6 add dnsservers \"" + interface_name + L"\" " + s_w_dns2;
 
 	cs = cmd.c_str();
 	log_wprintf(L"cmd: %s\r\n", cs);
-	log_wprintf(L"ret: %d\r\n", WCommend::runCmdAndOutPutRedirect(handle, cs, true));
+	log_wprintf(L"ret: %d\r\n", WCommand::runCmdAndOutPutRedirect(handle, cs, true));
 
 	CloseHandle(handle);
 }
@@ -158,7 +158,7 @@ void WebhookHttpService::get_ipv6_dns(const std::wstring interface_name, std::ws
 		log_wprintf(L"Error on CreatePipe().\r\n");
 	}
 
-	WCommend::runCmdAndOutPutRedirect(hWrite, cmd.c_str(), true);
+	WCommand::runCmdAndOutPutRedirect(hWrite, cmd.c_str(), true);
 	CloseHandle(hWrite);
 
 	std::string res;
@@ -182,7 +182,7 @@ void WebhookHttpService::get_ipv6_dns(const std::wstring interface_name, std::ws
 		getIpSubstring(s, ip);
 		if (!ip.empty() && ip != s_dns2)
 		{
-			wchar_t* w_ip = WCommend::char2wchar(ip.c_str());
+			wchar_t* w_ip = WCommand::char2wchar(ip.c_str());
 			output = w_ip;
 			delete[] w_ip;
 			break;

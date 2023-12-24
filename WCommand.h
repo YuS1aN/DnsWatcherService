@@ -2,7 +2,7 @@
 #include <string>
 #include <windows.h>
 
-class WCommend
+class WCommand
 {
 public:
 	static wchar_t* char2wchar(const char* cchar);
